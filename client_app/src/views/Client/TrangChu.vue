@@ -11,10 +11,10 @@
                         <v-expand-transition>
                             <v-row v-if="isHovering" class="overlay">
                                 <v-col cols="6">
-                                    <v-btn color="primary">Thêm giỏ hàng</v-btn>
+                                    <v-btn class="rounded-0" color="primary">Thêm giỏ hàng</v-btn>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-btn color="secondary">Xem chi tiết</v-btn>
+                                    <v-btn class="rounded-0" color="secondary">Xem chi tiết</v-btn>
                                 </v-col>
                             </v-row>
                         </v-expand-transition>

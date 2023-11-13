@@ -40,19 +40,28 @@
                 <v-icon>mdi-cart</v-icon>
             </v-badge>
         </v-btn>
+        <v-btn @click="this.showformLogin=true">
+            Đăng Nhập
+        </v-btn>
         <v-btn>
             <v-avatar>
                 <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John"></v-img>
             </v-avatar>
         </v-btn>
     </v-app-bar>
+
+
+    <LoginView v-model="this.showformLogin"/>
 </template>
 <script>
+import LoginView from '@/views/Account/LoginView.vue'
 export default {
+    components:{LoginView},
     name: 'NavBar',
     data() {
         return {
-            drawer: null
+            drawer: null,
+            showformLogin:false,
         }
     }
 }
