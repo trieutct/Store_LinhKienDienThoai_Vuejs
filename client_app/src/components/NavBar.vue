@@ -21,14 +21,16 @@
             </v-avatar>
         </v-badge>
     </v-app-bar> -->
-    <v-app-bar style="background-color: #0995ed !important;" class="text-white">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar style="background-color: #000 !important;" class="text-white">
         <v-toolbar-items>
-            <v-btn>Hire me</v-btn>
-            <v-btn>Blog</v-btn>
-            <v-btn>
+            <v-btn>Trang Chủ</v-btn>
+            <v-btn>Giới Thiệu</v-btn>
+            <!-- <v-btn>
                 <v-icon>mdi-cat</v-icon>
-            </v-btn>
+            </v-btn> -->
+            <v-btn>Sản Phẩm</v-btn>
+            <v-btn>Liên Hệ</v-btn>
+            <v-btn>Tin Tức</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-autocomplete hide-no-data hide-selected color="white" label="Search" prepend-inner-icon="search"

@@ -1,5 +1,5 @@
 <template>
-    <v-footer style="background-color: #0995ed !important;" 
+    <v-footer style="background-color: #000 !important;" 
     class="bg-indigo-lighten-1 text-center d-flex flex-column"
   >
     <div>
