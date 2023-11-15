@@ -1,4 +1,9 @@
 <template>
+    <h2 class="block-title position-relative text-center bold mb-4 mt-3">
+
+        <span class="position-absolute">-Sport-</span>
+        <span> SẢN PHẨM NỔI BẬT</span>
+    </h2>
     <v-row class="ma-1">
         <v-col v-for="product in products" :key="product.id" cols="12" md="3">
             <v-hover v-slot="{ isHovering, props }">
@@ -95,5 +100,29 @@ export default {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     justify-content: space-around;
+}
+.block-title {
+    padding: 20px 0;
+    font-size: 48px;
+}
+.position-relative {
+    position: relative!important;
+}
+.block-title span:nth-child(1) {
+    font-size: 130px;
+    width: 100%;
+    opacity: 0.05;
+    top: 0;
+    left: 50%;
+    line-height: 1;
+    transform: translateX(-50%);
+    letter-spacing: 30px;
+}
+.position-absolute {
+    position: absolute!important;
+}
+.block-title span:nth-child(2) {
+    color: #46694f;
+    font-size: 60px;
 }
 </style>
