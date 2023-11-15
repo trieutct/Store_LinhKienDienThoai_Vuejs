@@ -18,7 +18,7 @@
                                 <v-text-field prepend-icon="mdi-lock" v-model="formDangNhap.Password" label="Mật khẩu" required></v-text-field>
                             </v-col>
                         </v-row>
-                        <h5 class="text-center mt-3 mb-3">Quên mật khẩu?</h5>
+                        <h5 class="text-center mt-3 mb-3" @click="this.$emit('showFormQuenMatKhau')">Quên mật khẩu?</h5>
                         <v-card-actions class="justify-center">
                             <v-btn class="rounded-0" @click="Login()"
                                 style="background-color: #028bda !important;border-color: #028bda;color: white;">Đăng

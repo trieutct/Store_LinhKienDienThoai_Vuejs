@@ -122,12 +122,15 @@
             </v-menu>
         </v-btn>
     </v-app-bar>
-    <LoginView @close="closeDialog" v-model="this.showformLogin" />
+    <LoginView @showFormQuenMatKhau="showFormQuenMatKhau" @close="closeFormLogin" v-model="this.showformLogin" />
+
+    <form-quen-mat-khau  @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau"/>
 </template>
 <script>
+import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
 export default {
-    components: { LoginView },
+    components: { LoginView,FormQuenMatKhau },
     name: 'NavBar',
     data() {
         return {
@@ -139,11 +142,20 @@ export default {
                 { title: 'Click Me' },
                 { title: 'Click Me 2' },
             ],
+            isShowFormQuenMatKhau:false
         }
     },
     methods: {
-        closeDialog() {
+        closeFormLogin() {
             this.showformLogin = false
+        },
+        closeFormQuenMatKhau(){
+            this.isShowFormQuenMatKhau=false
+        },
+        showFormQuenMatKhau()
+        {
+            this.isShowFormQuenMatKhau=true,
+            this.closeFormLogin()
         }
     }
 }
