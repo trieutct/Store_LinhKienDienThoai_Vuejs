@@ -1,26 +1,4 @@
 <template>
-    <!-- <v-app-bar app color="pink" dark>
-        <v-icon></v-icon>
-        <v-toolbar-title>Leo TCT</v-toolbar-title>
-        <v-btn text class="ml-2">Movies</v-btn>
-        <v-btn text class="ml-2">Movies</v-btn>
-        <v-btn text class="ml-2">Movies</v-btn>
-        <v-btn text class="ml-2">Movies</v-btn>
-        <v-spacer></v-spacer>
-        <v-autocomplete clearable hide-no-data hide-selected color="white" label="Search" prepend-inner-icon="search"
-            flat></v-autocomplete>
-        <v-btn icon>
-            <v-badge color="green" content="22" overlap>
-                <v-icon>mdi-bell</v-icon>
-            </v-badge>
-        </v-btn>
-        <v-badge bordered bottom color="green" dot offset-x="10" offset-y="10">
-            <v-avatar size="40">
-                <v-img
-                    src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg_p240x240&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=DSkVCxHZHzEAX9KP0aO&_nc_ht=scontent.fhan2-3.fna&oh=00_AfDHRFCVss00BfFpUtmuj1qI-0EmLXF3EcRq9ayo-8I4gw&oe=6547FD03"></v-img>
-            </v-avatar>
-        </v-badge>
-    </v-app-bar> -->
     <v-app-bar style="background-color: #000 !important;" class="text-white">
         <v-toolbar-items>
             <v-btn>Trang Chủ</v-btn>
@@ -35,33 +13,105 @@
         <v-spacer></v-spacer>
         <v-autocomplete hide-no-data hide-selected color="white" label="Search" prepend-inner-icon="search"
             flat></v-autocomplete>
-        <v-btn>
-            <v-badge floating content="5" color="red">
-                <v-icon>mdi-cart</v-icon>
-            </v-badge>
+        <v-btn v-if="this.$store.state.token == null">
+            <v-menu open-on-hover width="500px">
+                <template v-slot:activator="{ props }">
+                    <v-badge v-bind="props" floating content="5" color="red">
+                        <v-icon>mdi-cart</v-icon>
+                    </v-badge>
+                </template>
+                <v-list class="mt-3">
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-account-circle"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Thông tin tài khoản</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-cart"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Đơn hàng của bạn</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-lock"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Đổi mật khẩu</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-logout"></v-icon>
+                        </template>
+                        <v-list-item-title @click="this.$store.dispatch('logout')" style="cursor: pointer;">Đăng
+                            xuất</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-btn>
-        <v-btn @click="this.showformLogin=true">
+        <v-btn v-if="this.$store.state.token == null" @click="this.showformLogin = true">
             Đăng Nhập
         </v-btn>
-        <v-btn>
-            <v-avatar>
-                <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John"></v-img>
-            </v-avatar>
+        <v-btn v-if="this.$store.state.token == null">
+            <v-menu open-on-hover>
+                <template v-slot:activator="{ props }">
+                    <v-btn v-bind="props">
+                        <v-avatar
+                            image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg_p240x240&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfApdS7AoliArKQW4d8iVAZKH_CZ8gM24qsY83Vy_-I5Yg&oe=6557CF03"></v-avatar>
+                    </v-btn>
+                </template>
+                <v-list class="mt-3">
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-account-circle"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Thông tin tài khoản</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-cart"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Đơn hàng của bạn</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-lock"></v-icon>
+                        </template>
+                        <v-list-item-title style="cursor: pointer;">Đổi mật khẩu</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-icon icon="mdi-logout"></v-icon>
+                        </template>
+                        <v-list-item-title @click="this.$store.dispatch('logout')" style="cursor: pointer;">Đăng
+                            xuất</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-btn>
     </v-app-bar>
-
-
-    <LoginView v-model="this.showformLogin"/>
+    <LoginView @close="closeDialog" v-model="this.showformLogin" />
 </template>
 <script>
 import LoginView from '@/views/Account/LoginView.vue'
 export default {
-    components:{LoginView},
+    components: { LoginView },
     name: 'NavBar',
     data() {
         return {
             drawer: null,
-            showformLogin:false,
+            showformLogin: false,
+            items: [
+                { title: 'Trịnh Công Triệu' },
+                { title: 'Click Me' },
+                { title: 'Click Me' },
+                { title: 'Click Me 2' },
+            ],
+        }
+    },
+    methods: {
+        closeDialog() {
+            this.showformLogin = false
         }
     }
 }
