@@ -30,6 +30,13 @@ export default createStore({
     logout(context)
     {
       context.commit('clearToken')
+    },
+    getsessionStorage_token(context)
+    {
+      if(sessionStorage.getItem('token'))
+      {
+        context.commit('setToken')
+      }
     }
   },
   modules: {

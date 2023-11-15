@@ -12,12 +12,20 @@
 import NavBar from './components/NavBar.vue';
 import FooTer from './components/FooTer.vue';
 import CarouselView from './components/CarouselView.vue';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   components: { NavBar, FooTer,CarouselView },
   data: () => ({
     length: 3,
     window: 0,
   }),
+  methods:{
+    ...mapActions(['getsessionStorage_token']),
+  },
+  created()
+  {
+    this.getsessionStorage_token()
+  }
 }
 </script>
 <style>

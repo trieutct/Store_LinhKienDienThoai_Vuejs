@@ -20,30 +20,30 @@
                         </v-row>
                         <h5 class="text-center mt-3 mb-3">Quên mật khẩu?</h5>
                         <v-card-actions class="justify-center">
-                            <v-btn class="rounded-0" @click="DangNhap()"
+                            <v-btn class="rounded-0" @click="Login()"
                                 style="background-color: #028bda !important;border-color: #028bda;color: white;">Đăng
                                 Nhập</v-btn>
-                            <v-btn class="rounded-0"
+                            <v-btn class="rounded-0" @click="this.$emit('close')"
                                 style="background-color: #ABBAC3 !important;border-color: white !important;color: white;">Hủy</v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item value="DangKy">
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field prepend-icon="mdi-account" label="Tài khoản" required></v-text-field>
+                                <v-text-field prepend-icon="mdi-account" v-model="this.formDangKy.Username" label="Tài khoản" required></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field prepend-icon="mdi-lock" label="Mật khẩu" required></v-text-field>
+                                <v-text-field prepend-icon="mdi-lock" v-model="this.formDangKy.Password" label="Mật khẩu" required></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field prepend-icon="mdi-lock" label="Nhập lại mật khẩu" required></v-text-field>
+                                <v-text-field prepend-icon="mdi-lock" v-model="this.formDangKy.cfPassword" label="Nhập lại mật khẩu" required></v-text-field>
                             </v-col>
                         </v-row>
                         <v-card-actions class="justify-center">
-                            <v-btn class="rounded-0"
+                            <v-btn class="rounded-0" @click="SingUp()"
                                 style="background-color: #028bda !important;border-color: #028bda;color: white;">Đăng
                                 ký</v-btn>
-                            <v-btn class="rounded-0"
+                            <v-btn class="rounded-0" @click="this.$emit('close')"
                                 style="background-color: #ABBAC3 !important;border-color: white !important;color: white;">Hủy</v-btn>
                         </v-card-actions>
                     </v-window-item>
@@ -54,6 +54,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
 export default {
     name: 'LoginView',
     data() {
@@ -66,15 +67,42 @@ export default {
             formDangKy:{
                 Username:'',
                 Password:'',
+                cfPassword:''
             }
         }
     },
     methods:{
         ...mapActions(['login']),
-        DangNhap()
+        Login()
         {
             this.login(this.formDangNhap).then(()=>{
                 this.$emit('close')
+            })
+        },
+        SingUp()
+        {
+            if(this.formDangKy.Password!=this.formDangKy.cfPassword)
+            {
+                alert("2 mật khẩu sai")
+                return
+            }
+
+
+            
+            const formData = new FormData();
+            formData.append('Username', this.formDangKy.Username);
+            formData.append('Password', this.formDangKy.Password);
+            axios.post("http://localhost:5224/api/Singup",formData).then(rs=>{
+                if(rs.status===200)
+                {
+                    alert(rs.data)
+                }
+            }).catch(erro=>{
+                if (erro.response.status === 409) {
+                    alert(erro.response.data.message)
+                } else {
+                    console.error('Lỗi đăng ký:', error);
+                }
             })
         }
     }
