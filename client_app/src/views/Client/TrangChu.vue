@@ -8,8 +8,7 @@
         <v-col v-for="product in products" :key="product.id" cols="12" md="3">
             <v-hover v-slot="{ isHovering, props }">
                 <v-card class="mx-auto" max-width="344" min-height="300px">
-                    <v-img v-bind="props" class="text-right" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                        height="200px" cover>
+                    <v-img v-bind="props" class="text-right" :src="product.ProductImage" height="200px" cover>
                         <v-btn icon>
                             <v-icon color="red">mdi-heart-outline</v-icon>
                         </v-btn>
@@ -26,68 +25,50 @@
                     </v-img>
 
                     <v-card-title>
-                        Top western road trips
+                        {{ product.ProductName }}
                     </v-card-title>
 
                     <v-card-subtitle class="mb-5">
-                        1,000 miles of wonder
+                        {{ formatCurrency(product.Price) }}
                     </v-card-subtitle>
 
                 </v-card>
             </v-hover>
         </v-col>
     </v-row>
+    <v-btn class="ma-5" style="background-color: #46694f;color: white;" width="200">Xem tất cả</v-btn>
 </template>
   
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
             show: false,
             selection: [],
-            products: [
-                {
-                    id: 1,
-                    name: "Sản phẩm 1",
-                    price: "$19.99",
-                    description: "Mô tả sản phẩm 1",
-                    image: "link_to_image_1.jpg",
-                },
-                {
-                    id: 2,
-                    name: "Sản phẩm 2",
-                    price: "$29.99",
-                    description: "Mô tả sản phẩm 2",
-                    image: "link_to_image_2.jpg",
-                }, {
-                    id: 1,
-                    name: "Sản phẩm 1",
-                    price: "$19.99",
-                    description: "Mô tả sản phẩm 1",
-                    image: "link_to_image_1.jpg",
-                },
-                {
-                    id: 2,
-                    name: "Sản phẩm 2",
-                    price: "$29.99",
-                    description: "Mô tả sản phẩm 2",
-                    image: "link_to_image_2.jpg",
-                }, {
-                    id: 1,
-                    name: "Sản phẩm 1",
-                    price: "$19.99",
-                    description: "Mô tả sản phẩm 1",
-                    image: "link_to_image_1.jpg",
-                },
-                {
-                    id: 2,
-                    name: "Sản phẩm 2",
-                    price: "$29.99",
-                    description: "Mô tả sản phẩm 2",
-                    image: "link_to_image_2.jpg",
-                },
-            ],
+            products: [],
         }
+    },
+    methods: {
+        getProducts() {
+            axios.get("http://localhost:5224/api/Product/UserGetProduct").then(rs => {
+                console.log(rs.data)
+                this.products = rs.data
+            }).catch(er => {
+                alert(er.message)
+            })
+        },
+        formatCurrency(value) {
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+
+            return formatter.format(value);
+        },
+    },
+    created() {
+        this.getProducts()
     }
 }
 </script>
@@ -101,13 +82,16 @@ export default {
     padding: 10px;
     justify-content: space-around;
 }
+
 .block-title {
     padding: 20px 0;
     font-size: 48px;
 }
+
 .position-relative {
-    position: relative!important;
+    position: relative !important;
 }
+
 .block-title span:nth-child(1) {
     font-size: 130px;
     width: 100%;
@@ -118,9 +102,11 @@ export default {
     transform: translateX(-50%);
     letter-spacing: 30px;
 }
+
 .position-absolute {
-    position: absolute!important;
+    position: absolute !important;
 }
+
 .block-title span:nth-child(2) {
     color: #46694f;
     font-size: 60px;

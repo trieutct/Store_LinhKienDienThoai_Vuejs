@@ -56,7 +56,7 @@
                     <td colspan="3" class="text-center text-red">Không có dữ liệu</td>
                 </tr>
                 <tr v-else v-for="(item, index) in products" :key="item.CategoryId">
-                    <td class="text-center" width="30px" style="border-right: 1px solid #CCC;"><span>{{ index + 1 }}</span></td>
+                    <td class="text-center" width="30px" style="border-right: 1px solid #CCC;"><span>{{ index+1 }}</span></td>
                     <td width="50px" style="border-right: 1px solid #CCC;">
                         <v-menu location="bottom">
                             <template v-slot:activator="{ props }">
@@ -87,7 +87,7 @@
                     </td>
                     <td style="border-right: 1px solid #CCC;">{{ item.ProductName }}</td>
                     <td class="text-center pa-1" style="border-right: 1px solid #CCC;"><img width="80" height="60" :src="item.ProductImage"></td>
-                    <td style="border-right: 1px solid #CCC;">{{ item.Price }}</td>
+                    <td style="border-right: 1px solid #CCC;">{{ formatCurrency(item.Price) }}</td>
                     <td style="border-right: 1px solid #CCC;">{{ item.Description }}</td>
                 </tr>
             </tbody>
@@ -208,7 +208,15 @@ export default {
             this.showAlert.content = content
             this.showAlert.icon = '$error'
             this.showAlert.color = 'error'
-        }
+        },
+        formatCurrency(value) {
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+
+            return formatter.format(value);
+        },
     },
     watch: {
         showAlert: {

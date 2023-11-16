@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 import axios from 'axios';
 export default createStore({
   state: {
-    token:null
+    token:null,
+    UserId:null
   },
   getters: {
     token:state=>state.token
@@ -10,11 +11,21 @@ export default createStore({
   mutations: {
     setToken(state){
       state.token=sessionStorage.getItem('token');
-      console.log()
+    },
+    setUserId(state){
+      state.UserId=sessionStorage.getItem('UserId');
     },
     clearToken(state){
+      if(!sessionStorage.getItem('token'))
+        return
       state.token=null
       sessionStorage.removeItem('token');
+    },
+    clearUserId(state){
+      if(!sessionStorage.getItem('UserId'))
+        return
+      state.UserId=null
+      sessionStorage.removeItem('UserId');
     }
   },
   actions: {
@@ -22,7 +33,9 @@ export default createStore({
     {
       axios.post("http://localhost:5224/api/Account/login",form).then(rs=>{
         sessionStorage.setItem('token', rs.data.token);
-          context.commit('setToken')
+        sessionStorage.setItem('token', rs.data.UserId);
+        context.commit('setToken')
+        context.commit('setUserId')
       }).catch(erro=>{
           alert(erro.message)
       })
@@ -30,6 +43,7 @@ export default createStore({
     logout(context)
     {
       context.commit('clearToken')
+      context.commit('clearUserId')
     },
     getsessionStorage_token(context)
     {
@@ -40,5 +54,6 @@ export default createStore({
     }
   },
   modules: {
+    
   }
 })

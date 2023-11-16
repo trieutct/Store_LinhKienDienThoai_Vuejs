@@ -1,26 +1,52 @@
 <template>
-    <v-footer style="background-color: #000 !important;" 
-    class="bg-indigo-lighten-1 text-center d-flex flex-column"
+    <v-footer style="background-color: #222222 !important;" 
+    class="text-white"
   >
-    <div>
-      <v-btn
-        v-for="icon in icons"
-        :key="icon"
-        class="mx-4"
-        :icon="icon"
-        variant="text"
-      ></v-btn>
-    </div>
-
-    <div class="pt-0">
-      Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-    </div>
-
-    <v-divider></v-divider>
-
-    <div>
-      {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-    </div>
+    <v-container class="ma-0">
+      <v-row width="100%">
+      <v-col cols="6">
+        <v-img width="100" height="100" src="https://bizweb.dktcdn.net/100/494/200/themes/918976/assets/logo_footer.png?1699863052785"></v-img>
+        <h2 class="text-left">Cửa Hàng Phân Phối Phụ Kiên Chính Hãng</h2>
+        <p class="text-left mt-3">Thụy Trình - Thái Thụy - Thái Bình</p>
+        <p class="text-left mt-3">0941590356</p>
+        <p class="text-left mt-3">trinhcongtrieu2972002@gmail.com</p>
+        <p class="text-left mt-3">https://www.facebook.com/trinhcong.trieu</p>
+        <h4 class="text-left mt-5">Bản quyền thuộc về Trịnh Công Triệu</h4>
+      </v-col>
+      <v-col cols="6">
+        <v-table  style="background-color: #222222 !important;">
+          <thead>
+            <tr>
+              <th><h4 class="text-white">Về Chúng Tôi</h4></th>
+              <th><h4 class="text-white">Chính sách</h4></th>
+              <th><h4 class="text-white">Tư vấn khách hàng</h4></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class=" text-left text-white">Trang Chủ</td>
+              <td class=" text-left text-white">Chính sách đối tác</td>
+              <td class=" text-left text-white">Mua hàng hotline:1800000</td>
+            </tr>
+            <tr>
+              <td class=" text-left text-white">Giới thiệu</td>
+              <td class=" text-left text-white">Chính sách đối trả</td>
+              <td class=" text-left text-white">Bảo hành .............</td>
+            </tr>
+            <tr>
+              <td class=" text-left text-white">Sản Phẩm</td>
+              <td class=" text-left text-white">Chính sách thanh toán</td>
+              <td class=" text-left text-white">Khiếu nại ..........</td>
+            </tr>
+            <tr>
+              <td class=" text-left text-white">Hệ thống cửa hàng</td>
+              <td class=" text-left text-white">Chính sách giao hàng</td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-col>
+    </v-row>
+    </v-container>
   </v-footer>
 </template>
 <script>

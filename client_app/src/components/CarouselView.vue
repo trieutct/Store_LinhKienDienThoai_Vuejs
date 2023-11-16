@@ -16,16 +16,19 @@ export default {
       return {
         items: [
           {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+            src: 'https://cdn-v2.didongviet.vn/files/banners/2023/10/16/1/1700126529185_15_pro_max_824x400.jpg',
           },
           {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+            src: 'https://cdn-v2.didongviet.vn/files/banners/2023/10/7/1/1699355263120_final_824x400.png',
           },
           {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+            src: 'https://cdn-v2.didongviet.vn/files/banners/2023/10/2/1/1698909730327_xiaomi_13t_824x400.jpg',
           },
           {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+            src: 'https://cdn-v2.didongviet.vn/files/banners/2023/9/4/1/1696388609214_main_824x400.jpg',
+          },
+          {
+            src: 'https://cdn-v2.didongviet.vn/files/banners/2023/10/16/1/1700132634763_main_banner_1.jpg',
           },
         ],
       }

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog class="custom-dialog"  transition="dialog-top-transition" width="800px">
+    <v-dialog transition="dialog-top-transition" width="800px">
         <v-card class="rounded-0">
             <v-toolbar class="text-center bold-text" style="background-color: #0080dd;color: white;"
                 :title="this.idEdit != null ? 'SỬA SẢN PHẨM' : 'THÊM SẢN PHẨM'"></v-toolbar>
@@ -61,7 +61,6 @@ export default {
         save() {
             //console.log(this.formData)
             this.$emit("save", this.formData)
-            this.emtyForm()
         },
         closeDialog() {
             this.$emit("close")
@@ -102,14 +101,6 @@ export default {
 }
 </script>
 <style scoped>
-.custom-dialog {
-    position: absolute;
-    /* Đặt dialog ở chế độ tuyệt đối */
-    top: 0%;
-    /* Đặt top với giá trị tùy chỉnh, ví dụ 200px */
-    left: 10%;
-    /* Đặt left với giá trị tùy chỉnh, ví dụ 300px */
-}
 
 .bold-text {
     font-weight: bold;
