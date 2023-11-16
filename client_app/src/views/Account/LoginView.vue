@@ -92,7 +92,7 @@ export default {
             const formData = new FormData();
             formData.append('Username', this.formDangKy.Username);
             formData.append('Password', this.formDangKy.Password);
-            axios.post("http://localhost:5224/api/Singup",formData).then(rs=>{
+            axios.post("http://localhost:5224/api/Account/singup",formData).then(rs=>{
                 if(rs.status===200)
                 {
                     alert(rs.data)

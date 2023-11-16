@@ -20,7 +20,7 @@ export default createStore({
   actions: {
     login(context,form)
     {
-      axios.post("http://localhost:5224/api/Login/login",form).then(rs=>{
+      axios.post("http://localhost:5224/api/Account/login",form).then(rs=>{
         sessionStorage.setItem('token', rs.data.token);
           context.commit('setToken')
       }).catch(erro=>{
