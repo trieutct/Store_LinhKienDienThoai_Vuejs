@@ -52,7 +52,6 @@ export default {
     methods: {
         getProducts() {
             axios.get("http://localhost:5224/api/Product/UserGetProduct").then(rs => {
-                console.log(rs.data)
                 this.products = rs.data
             }).catch(er => {
                 alert(er.message)

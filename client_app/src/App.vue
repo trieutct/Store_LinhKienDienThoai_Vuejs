@@ -6,26 +6,37 @@
       <router-view />
     </v-main>
     <foo-ter />
+
+
+  <ToastMessage v-model="this.$store.state.loginErro.show" :content="loginErro.content" :color="loginErro.color" :icon="loginErro.icon"/>
   </v-app>
 </template>
 <script>
 import NavBar from './components/NavBar.vue';
 import FooTer from './components/FooTer.vue';
 import CarouselView from './components/CarouselView.vue';
+import ToastMessage from './components/ToastMessage.vue';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { NavBar, FooTer,CarouselView },
+  components: { NavBar, FooTer,CarouselView,ToastMessage },
   data: () => ({
     length: 3,
     window: 0,
   }),
   methods:{
     ...mapActions(['getsessionStorage_token']),
+    ok()
+    {
+      console.log(loginErro)
+    }
   },
   created()
   {
     this.getsessionStorage_token()
-  }
+  },
+  computed:{
+    ...mapGetters(['loginErro'])
+  },
 }
 </script>
 <style>

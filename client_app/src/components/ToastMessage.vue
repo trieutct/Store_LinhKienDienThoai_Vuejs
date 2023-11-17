@@ -19,7 +19,7 @@
   <style scoped>
   .success-alert {
     position: fixed;
-    top: 20px; 
+    top: 12%; 
     right: 20px; 
     max-width: 300px;
     width: 100%;
