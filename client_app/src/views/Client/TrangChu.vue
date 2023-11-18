@@ -9,13 +9,20 @@
             <v-hover v-slot="{ isHovering, props }">
                 <v-card class="mx-auto" max-width="344" min-height="300px">
                     <v-img v-bind="props" class="text-right" :src="product.ProductImage" height="200px" cover>
-                        <v-btn icon>
+                        <v-btn v-if="this.$store.state.FavoriteProductForUserId != null" @click="AddFavoriteProduct(product)"
+                            icon>
+                            <v-icon color="red">{{
+                                this.$store.state.FavoriteProductForUserId.some(x => x.ProductId === product.ProductId) ?
+                                'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+                            <!-- <p>{{ product.ProductId }}</p> -->
+                        </v-btn>
+                        <v-btn v-else @click="AddFavoriteProduct(product)" icon>
                             <v-icon color="red">mdi-heart-outline</v-icon>
                         </v-btn>
                         <v-expand-transition>
                             <v-row v-if="isHovering" class="overlay">
                                 <v-col cols="6">
-                                    <v-btn class="rounded-0" color="primary">Thêm giỏ hàng</v-btn>
+                                    <v-btn @click="AddCart(product)" class="rounded-0" color="primary">Thêm giỏ hàng</v-btn>
                                 </v-col>
                                 <v-col cols="6">
                                     <v-btn class="rounded-0" color="secondary">Xem chi tiết</v-btn>
@@ -50,6 +57,7 @@ export default {
         }
     },
     methods: {
+
         getProducts() {
             axios.get("http://localhost:5224/api/Product/UserGetProduct").then(rs => {
                 this.products = rs.data
@@ -65,6 +73,126 @@ export default {
 
             return formatter.format(value);
         },
+        AddFavoriteProduct(item) {
+            if (this.$store.state.UserId == null) {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: "Vui lòng đăng nhập",
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+                return
+            }
+
+            const formData = new FormData();
+            formData.append('ProductId', item.ProductId);
+            formData.append('UserId', this.$store.state.UserId);
+            axios.post('http://localhost:5224/api/FavoriteProduct', formData,{
+                headers: {
+                    'Authorization': `Bearer ` + this.$store.state.token,
+                },
+            }).then(rs => {
+                //console.log(rs)
+
+                if (rs.data.status === "Add") {
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$success',
+                        content: rs.data.message,
+                        color: 'success'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                }
+                else {
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$warning',
+                        content: rs.data.message,
+                        color: 'warning'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                }
+
+                this.$store.dispatch('getFavoriteProductForUserId', this.$store.state.UserId)
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
+        },
+        AddCart(item) {
+            if (this.$store.state.UserId == null) {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: "Vui lòng đăng nhập",
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+                return
+            }
+
+            const formData = new FormData();
+            formData.append('ProductId', item.ProductId);
+            formData.append('Quantity', 1);
+            formData.append('UserId', this.$store.state.UserId);
+            axios.post('http://localhost:5224/api/Cart', formData, {
+                headers: {
+                    'Authorization': `Bearer ` + this.$store.state.token,
+                },
+            }).then(rs => {
+                if (rs.data.status === 0) {
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$warning',
+                        content: rs.data.message,
+                        color: 'warning'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                }
+                else {
+                    this.$store.dispatch('getListCart', sessionStorage.getItem('UserId'))
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$success',
+                        content: rs.data.message,
+                        color: 'success'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                }
+
+
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
+        }
     },
     created() {
         this.getProducts()

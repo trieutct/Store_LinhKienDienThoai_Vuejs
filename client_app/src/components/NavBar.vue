@@ -14,9 +14,12 @@
         <v-autocomplete hide-no-data hide-selected color="white" label="Search" prepend-inner-icon="search"
             flat></v-autocomplete>
         <v-btn v-if="this.$store.state.token != null">
-            <v-menu open-on-hover width="500px" height="500px">
+            <v-menu open-on-hover width="500px" min-height="100px" max-height="500px">
                 <template v-slot:activator="{ props }">
-                    <v-badge v-bind="props" floating content="5" color="red">
+                    <v-badge @click="showCart()" v-if="this.$store.state.listCart===null" v-bind="props" floating content="0" color="red">
+                        <v-icon>mdi-cart</v-icon>
+                    </v-badge>
+                    <v-badge @click="showCart()" v-else v-bind="props" floating :content="this.$store.state.listCart.length" color="red">
                         <v-icon>mdi-cart</v-icon>
                     </v-badge>
                 </template>
@@ -26,54 +29,28 @@
                             <v-icon icon="mdi-account-circle"></v-icon>
                         </template>
                         <v-list-item-title style="cursor: pointer;">Thông tin tài khoản</v-list-item-title> -->
-                        <v-card>
+                        <v-card v-if="this.$store.state.listCart==null  || this.$store.state.listCart.length===0">
+                            <v-row>
+                                <v-col cols="12" class="text-center">
+                                    <span color="red" style="color: red;">Chưa có sản phẩm trong giỏ hàng</span>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                        <v-card v-else>
                             <v-row>
                                 <v-col cols="12">
                                     <span style="color: #a79e9ecc;">Sản phẩm mới thêm</span>
                                 </v-col>
                             </v-row>
-                            <v-row>
+                            <v-row  v-for="cart in this.$store.state.listCart" :key="cart">
                                 <v-col cols="2">
-                                    <v-img width="50" height="50" src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBxlcGiR14A-PNRfMz9Tmqsb7i9mQiGj_fOxaxVDPW2gg&oe=6558ED85"></v-img>
+                                    <v-img width="50" height="50" :src="cart.Image"></v-img>
                                 </v-col>
                                 <v-col cols="7">
-                                    <span>Bộ sản phẩm chăm sóc da làm sạch & bảo vệ toàn diện cho nam Men Stay Simplicity Starter Duo: Sữa rửa mặt x Kem dưỡng ẩm</span>
+                                    <span>{{ cart.ProductName }}</span>
                                 </v-col>
                                 <v-col cols="3">
-                                    <v-card-text>đ450.000</v-card-text>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="2">
-                                    <v-img width="50" height="50" src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBxlcGiR14A-PNRfMz9Tmqsb7i9mQiGj_fOxaxVDPW2gg&oe=6558ED85"></v-img>
-                                </v-col>
-                                <v-col cols="7">
-                                    <span>Bộ sản phẩm chăm sóc da làm sạch & bảo vệ toàn diện cho nam Men Stay Simplicity Starter Duo: Sữa rửa mặt x Kem dưỡng ẩm</span>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-card-text>đ450.000</v-card-text>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="2">
-                                    <v-img width="50" height="50" src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBxlcGiR14A-PNRfMz9Tmqsb7i9mQiGj_fOxaxVDPW2gg&oe=6558ED85"></v-img>
-                                </v-col>
-                                <v-col cols="7">
-                                    <span>Bộ sản phẩm chăm sóc da làm sạch & bảo vệ toàn diện cho nam Men Stay Simplicity Starter Duo: Sữa rửa mặt x Kem dưỡng ẩm</span>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-card-text>đ450.000</v-card-text>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="2">
-                                    <v-img width="50" height="50" src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBxlcGiR14A-PNRfMz9Tmqsb7i9mQiGj_fOxaxVDPW2gg&oe=6558ED85"></v-img>
-                                </v-col>
-                                <v-col cols="7">
-                                    <span>Bộ sản phẩm chăm sóc da làm sạch & bảo vệ toàn diện cho nam Men Stay Simplicity Starter Duo: Sữa rửa mặt x Kem dưỡng ẩm</span>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-card-text>đ450.000</v-card-text>
+                                    <v-card-text>{{ formatCurrency(cart.Price) }}</v-card-text>
                                 </v-col>
                             </v-row>
                         </v-card>
@@ -125,12 +102,14 @@
     <LoginView @showFormQuenMatKhau="showFormQuenMatKhau" @close="closeFormLogin" v-model="this.showformLogin" />
 
     <form-quen-mat-khau  @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau"/>
+    <CartView v-model="this.cartVisible" @close="this.cartVisible=false"/>
 </template>
 <script>
 import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
+import CartView from '@/views/Client/CartView.vue'
 export default {
-    components: { LoginView,FormQuenMatKhau },
+    components: { LoginView,FormQuenMatKhau,CartView },
     name: 'NavBar',
     data() {
         return {
@@ -142,7 +121,8 @@ export default {
                 { title: 'Click Me' },
                 { title: 'Click Me 2' },
             ],
-            isShowFormQuenMatKhau:false
+            isShowFormQuenMatKhau:false,
+            cartVisible:false
         }
     },
     methods: {
@@ -156,6 +136,18 @@ export default {
         {
             this.isShowFormQuenMatKhau=true,
             this.closeFormLogin()
+        },
+        formatCurrency(value) {
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+
+            return formatter.format(value);
+        },
+        showCart()
+        {
+           this.cartVisible=true
         }
     }
 }

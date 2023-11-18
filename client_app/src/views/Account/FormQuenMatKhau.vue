@@ -123,9 +123,6 @@ export default {
                 setTimeout(() => {
                     this.$store.commit('clearLoginError');
                 }, 3000);
-
-
-
             }).catch(er => {
                 //alert(er.message)
                 this.$emit('close')

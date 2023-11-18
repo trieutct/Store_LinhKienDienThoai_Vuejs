@@ -21,7 +21,6 @@
     position: fixed;
     top: 12%; 
     right: 20px; 
-    max-width: 300px;
-    width: 100%;
+    min-width: 300px;
   }
   </style>
