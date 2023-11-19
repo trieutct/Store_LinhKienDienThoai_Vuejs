@@ -1,7 +1,7 @@
 <template>
     <v-dialog class="custom-dialog" transition="dialog-top-transition" width="500px">
         <v-card class="rounded-0">
-            <v-tabs v-model="tab" bg-color="#028bda" align-tabs="center">
+            <v-tabs v-model="tab" bg-color="#46694f" align-tabs="center">
                 <v-tab value="DangNhap">Đăng Nhập</v-tab>
                 <v-tab value="DangKy">Đăng Ký</v-tab>
             </v-tabs>
@@ -23,7 +23,7 @@
                         <h5 class="text-center mt-3 mb-3" @click="this.$emit('showFormQuenMatKhau')">Quên mật khẩu?</h5>
                         <v-card-actions class="justify-center">
                             <v-btn class="rounded-0" @click="Login()"
-                                style="background-color: #028bda !important;border-color: #028bda;color: white;">Đăng
+                                style="background-color: #46694f !important;border-color: #028bda;color: white;">Đăng
                                 Nhập</v-btn>
                             <v-btn class="rounded-0" @click="this.$emit('close')"
                                 style="background-color: #ABBAC3 !important;border-color: white !important;color: white;">Hủy</v-btn>
@@ -46,7 +46,7 @@
                         </v-row>
                         <v-card-actions class="justify-center">
                             <v-btn class="rounded-0" @click="SingUp()"
-                                style="background-color: #028bda !important;border-color: #028bda;color: white;">Đăng
+                                style="background-color: #46694f !important;border-color: #46694f;color: white;">Đăng
                                 ký</v-btn>
                             <v-btn class="rounded-0" @click="this.$emit('close')"
                                 style="background-color: #ABBAC3 !important;border-color: white !important;color: white;">Hủy</v-btn>
