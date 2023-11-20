@@ -1,5 +1,5 @@
 <template>
-    <canvas id="myChart" style="width:100%"></canvas>
+    <canvas id="myChart" style="background-color:white;"></canvas>
 </template>
 
 <script>
@@ -7,13 +7,14 @@ import Chart from 'chart.js/auto';
 export default {
     mounted() {
         const ctx = document.getElementById('myChart');
+
         new Chart(ctx, {
-            type: 'pie',
+            type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Triệu', "ádahd"],
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3, 100, 2],
+                    data: [12, 19, 3, 5, 2, 3],
                     borderWidth: 1
                 }]
             },
