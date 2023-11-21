@@ -6,7 +6,7 @@
             </v-col>
             <v-col cols="8">
                 <p style="font-weight: bold;" class="mt-3 ma-0 text-red">Tổng đơn hàng</p>
-                <span style="font-weight: bold;" class="ml-1 text-black">2 </span><span>đơn
+                <span style="font-weight: bold;" class="ml-1 text-black">{{ this.toatalOrders }}</span><span> đơn
                     hàng</span>
             </v-col>
         </v-row>
@@ -14,8 +14,26 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-
+    data() {
+        return {
+            toatalOrders: 0,
+        }
+    },
+    created() {
+        this.gettoatalOrders()
+    },
+    methods:
+    {
+        gettoatalOrders() {
+            axios.get('http://localhost:5224/api/DashBoard/getTotalOrder').then(rs => {
+                this.toatalOrders = rs.data
+            }).catch(erro => {
+                console.log(erro)
+            })
+        }
+    }
 }
 </script>
 

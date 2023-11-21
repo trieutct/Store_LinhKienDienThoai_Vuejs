@@ -5,169 +5,99 @@
         </v-card-title>
 
         <v-card-text>
-            <v-table fixed-header height="500px">
+            <v-table fixed-header min-height="100px" max-height="400px">
                 <thead>
                     <tr>
+                        <th>
+                            <v-checkbox v-model="selectAll" color="success"
+                                class="d-flex align-center justify-center"></v-checkbox>
+                        </th>
                         <th>MĐH</th>
                         <th>Tên KH</th>
                         <th>Total</th>
-                        <th>Action</th>
+                        <th>Time</th>
+                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
+                    <tr v-for="item in listDonHangCanDuyet" :key="item.Id">
+                        <td><v-checkbox v-model="chooseListDonHang" :value="item.Id" color="success"
+                                class="d-flex align-center justify-center"></v-checkbox></td>
                         <td>
-                            <v-btn color="success">Duyệt</v-btn>
+                            <p>{{ item.Id }}</p>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
+                        <td>{{ item.NguoiNhan }}</td>
+                        <td>{{ formatCurrency(item.Total) }}</td>
+                        <td>{{ formatDateTime(item.NgayDat) }}</td>
+                        <!-- <td>
                             <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Trịnh Công Triệu</td>
-                        <td>200000đ</td>
-                        <td>
-                            <v-btn color="success">Duyệt</v-btn>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </v-table>
         </v-card-text>
+        <v-card-actions>
+            <v-btn min-width="20%" height="40" class="ml-auto mr-3" style="color: white;" color="success"
+                variant="elevated">Duyệt</v-btn>
+        </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            listDonHangCanDuyet: [],
+            selectAll: false,
+            chooseListDonHang: []
+        }
+    },
+    created() {
+        this.getDonHangCanDuyets()
+    },
+    methods: {
+        getDonHangCanDuyets() {
+            axios.get('http://localhost:5224/api/DashBoard/getDonHangCanDuyet').then(rs => {
+                this.listDonHangCanDuyet = rs.data
+                //console.log(rs.data)
+            }).catch(erro => {
+                alert(erro)
+                console.log(erro)
+            })
+        },
+        formatDateTime(dateTimeString) {
+            const dateObject = new Date(dateTimeString);
 
+            const day = String(dateObject.getDate()).padStart(2, '0');
+            const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+            const year = String(dateObject.getFullYear()).slice(2);
+            const hours = String(dateObject.getHours()).padStart(2, '0');
+            const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+            const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+
+            return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        },
+        formatCurrency(value) {
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+            });
+            return formatter.format(value);
+        },
+    },
+    watch: {
+        selectAll(newVal) {
+            //alert(newVal)
+            if (!newVal)
+                this.chooseListDonHang = []
+            this.chooseListDonHang = this.listDonHangCanDuyet.map(cart => cart.Id);
+        },
+        chooseListDonHang(newval) {
+
+            console.log(newval)
+        }
+    }
 }
 </script>
 

@@ -6,15 +6,34 @@
             </v-col>
             <v-col cols="8">
                 <p style="font-weight: bold;" class="mt-3 ma-0 text-red">Tổng sản phẩm</p>
-                <span style="font-weight: bold;" class="ml-1 text-black">2 sản phẩm</span>
+                <span style="font-weight: bold;" class="ml-1 text-black">{{ toatalproduct }} sản phẩm</span>
             </v-col>
         </v-row>
     </v-card>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    data() {
+        return {
+            toatalproduct: 0,
+        }
+    },
+    created() {
+        this.gettoatalproduct()
+    },
+    methods:
+    {
+        gettoatalproduct() {
+            axios.get('http://localhost:5224/api/DashBoard/getTotalProduct').then(rs => {
+                this.toatalproduct = rs.data
+            }).catch(erro => {
+                console.log(erro)
+            })
+        }
+    }
 }
 </script>
 

@@ -6,15 +6,34 @@
             </v-col>
             <v-col cols="8">
                 <p style="font-weight: bold;" class="mt-3 ma-0 text-red">Tổng Khách Hàng</p>
-                <span style="font-weight: bold;" class="ml-1 text-black">2 khách hàng</span>
+                <span style="font-weight: bold;" class="ml-1 text-black">{{ toatalClient }} khách hàng</span>
             </v-col>
         </v-row>
     </v-card>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name: 'TongKhachHang'
+    name: 'TongKhachHang',
+    data() {
+        return {
+            toatalClient: 0,
+        }
+    },
+    created() {
+        this.gettoatalClient()
+    },
+    methods:
+    {
+        gettoatalClient() {
+            axios.get('http://localhost:5224/api/DashBoard/getToatlAccountClient').then(rs => {
+                this.toatalClient = rs.data
+            }).catch(erro => {
+                console.log(erro)
+            })
+        }
+    }
 }
 </script>
 
