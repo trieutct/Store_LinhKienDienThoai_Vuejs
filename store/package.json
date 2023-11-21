@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --post 8060",
     "build": "vue-cli-service build"
   },
   "dependencies": {
@@ -12,12 +12,14 @@
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vuetify": "^3.3.19"
+    "vuetify": "^3.3.19",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@mdi/font": "^7.3.67",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0"
   }
 }

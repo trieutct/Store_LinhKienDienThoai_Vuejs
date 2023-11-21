@@ -327,6 +327,10 @@ export default {
                     this.$store.commit('clearLoginError');
                 }, 3000);
             })
+        },
+        setEmpty()
+        {
+            this.chooseListProduct=[]
         }
     },
 
@@ -340,7 +344,11 @@ export default {
         },
         selectAll(newVal) {
             if (!newVal)
+            {
+                this.setEmpty()
+                this.TinhTongTien()
                 return
+            }
             this.chooseListProduct = this.$store.state.listCart.map(cart => cart.CartId);
             this.TinhTongTien()
             //console.log(this.chooseListProduct)

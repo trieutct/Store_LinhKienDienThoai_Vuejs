@@ -1,14 +1,22 @@
 <template>
-  <header-view/>
-<!--  -->
+  <header-view />
+  <ToastMessageVue v-model="this.$store.state.loginErro.show" :content="loginErro.content" :color="loginErro.color"
+    :icon="loginErro.icon" />
+  <!--  -->
 </template>
 <script>
 import HeaderView from '@/components/Admin/HeaderView.vue';
+import ToastMessageVue from './components/ToastMessage.vue';
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  components:{
-    HeaderView
-  }
-  
+  components: {
+    HeaderView,
+    ToastMessageVue
+  },
+  computed: {
+    ...mapGetters(['loginErro'])
+  },
+
 }
 </script>
 <style>
