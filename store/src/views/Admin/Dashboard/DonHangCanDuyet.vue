@@ -3,7 +3,6 @@
         <v-card-title style="font-size: 14px;"><strong>Đơn hàng cần duyệt</strong>
             <div style="width: 100%; height: 2px;background-color: rgb(216, 216, 136);"></div>
         </v-card-title>
-
         <v-card-text>
             <v-table fixed-header min-height="100px" max-height="400px">
                 <thead>
@@ -37,8 +36,8 @@
             </v-table>
         </v-card-text>
         <v-card-actions>
-            <v-btn min-width="20%" height="40" class="ml-auto mr-3" style="color: white;" color="success"
-                variant="elevated">Duyệt</v-btn>
+            <v-btn @click="DuyetDonHang()" min-width="20%" height="40" class="ml-auto mr-3" style="color: white;"
+                color="success" variant="elevated">Duyệt</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -85,17 +84,24 @@ export default {
             });
             return formatter.format(value);
         },
+        DuyetDonHang() {
+            axios.post('http://localhost:5224/api/DashBoard/DuyetDonHang', this.chooseListDonHang).then(rs => {
+                
+            }).catch(erro => {
+                alert(erro)
+            })
+        }
     },
     watch: {
         selectAll(newVal) {
             //alert(newVal)
-            if (!newVal)
-                this.chooseListDonHang = []
+            if (!newVal) {
+                return
+            }
             this.chooseListDonHang = this.listDonHangCanDuyet.map(cart => cart.Id);
         },
         chooseListDonHang(newval) {
-
-            console.log(newval)
+            //console.log(newval)
         }
     }
 }
