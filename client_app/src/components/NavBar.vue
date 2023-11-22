@@ -66,7 +66,7 @@
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props">
                         <v-avatar
-                            image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg_p240x240&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=1gOsdaXgIkUAX_1gkhS&_nc_ht=scontent.fhan2-3.fna&oh=00_AfApdS7AoliArKQW4d8iVAZKH_CZ8gM24qsY83Vy_-I5Yg&oe=6557CF03"></v-avatar>
+                            image="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/346628852_3569157126677660_806125988768809013_n.jpg?stp=cp6_dst-jpg_p240x240&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEmnqkEAUG317vRuDrE1X92Vs72jQar-UhWzvaNBqv5SNZSzCPhGGkU81DYnd5tZXzQzeza2u_aGP3UGpQidLb4&_nc_ohc=kLq-mcGVoBkAX_S9Z38&_nc_ht=scontent.fhan2-3.fna&oh=00_AfBOvLQemrl88fktmpMU6oDHHz6CEiK_ezDAub1ula9Ajw&oe=6563AC83"></v-avatar>
                     </v-btn>
                 </template>
                 <v-list class="mt-3">
@@ -80,7 +80,7 @@
                         <template v-slot:prepend>
                             <v-icon icon="mdi-cart"></v-icon>
                         </template>
-                        <v-list-item-title style="cursor: pointer;">Đơn hàng của bạn</v-list-item-title>
+                        <v-list-item-title @click="this.showDonHang=true" style="cursor: pointer;">Đơn hàng của bạn</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                         <template v-slot:prepend>
@@ -103,18 +103,22 @@
 
     <form-quen-mat-khau  @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau"/>
     <CartView v-model="this.cartVisible" @close="this.cartVisible=false"/>
+
+    <DonHang :id="this.$store.state.UserId" v-model="showDonHang" @close="this.showDonHang=false"/>
 </template>
 <script>
 import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
 import CartView from '@/views/Client/CartView.vue'
+import DonHang from '@/views/Client/DonHang.vue'
 export default {
-    components: { LoginView,FormQuenMatKhau,CartView },
+    components: { LoginView,FormQuenMatKhau,CartView ,DonHang},
     name: 'NavBar',
     data() {
         return {
             drawer: null,
             showformLogin: false,
+            showDonHang:false,
             items: [
                 { title: 'Trịnh Công Triệu' },
                 { title: 'Click Me' },
