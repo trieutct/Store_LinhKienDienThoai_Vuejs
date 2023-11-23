@@ -32,26 +32,33 @@
                                 <td v-if="item.TrangThai===1"><span class="text-green">Đang chuẩn bị hàng</span></td>
                                 <td v-if="item.TrangThai===2"><span class="text-blue">Đang giao</span></td>
                                 <td v-if="item.TrangThai===3"><span class="text-white pa-2" style="background-color: rgb(12, 242, 12);">Hoàn thành</span></td>
-                                <td><v-btn variant="text"><v-icon color="green">mdi-eye</v-icon></v-btn></td>
+                                <td><v-btn @click="ShowDetails(item)" variant="text"><v-icon color="green">mdi-eye</v-icon></v-btn></td>
                             </tr>
                         </tbody>
                     </v-table>
                 </div>
             </v-card-text>
         </v-card>
+        <ChiTietDonHangVue :orderId="this.orderId" v-model="this.ShowDialogDetails"/>
   </v-dialog>
 </template>
 <script>
 import axios from 'axios';
+import ChiTietDonHangVue from './ChiTietDonHang.vue';
 export default {
     name:'DonHang',
+    components:{
+        ChiTietDonHangVue
+    },
     props:{
-        id:Number
+        id:String
     },
     data()
     {
         return{
-            listDonHangByUserId:[]
+            listDonHangByUserId:[],
+            ShowDialogDetails:false,
+            orderId:'   '
         }
     },
     mounted()
@@ -104,6 +111,11 @@ export default {
             });
             return formatter.format(value);
         },
+        ShowDetails(item)
+        {
+            this.orderId=item.Id
+            this.ShowDialogDetails=true
+        }
     },
     watch:{
         id(newVal)
