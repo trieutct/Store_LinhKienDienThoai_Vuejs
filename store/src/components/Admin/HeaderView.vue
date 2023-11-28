@@ -15,6 +15,7 @@
           value="Danh mục"></v-list-item>
         <v-list-item :to="{ name: 'ProductView' }" prepend-icon="mdi-account" title="Sản Phẩm"
           value="Sản Phẩm"></v-list-item>
+        <v-list-item :to="{ name: 'DonHang' }" prepend-icon="mdi-account" title="Đơn Hàng" value="Đơn Hàng"></v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-main>

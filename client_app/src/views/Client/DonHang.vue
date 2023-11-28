@@ -58,7 +58,7 @@ export default {
         return{
             listDonHangByUserId:[],
             ShowDialogDetails:false,
-            orderId:'   '
+            orderId:''
         }
     },
     mounted()
