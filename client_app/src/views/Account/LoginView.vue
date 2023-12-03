@@ -36,11 +36,11 @@
                                     label="Tài khoản" required></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field prepend-icon="mdi-lock" v-model="this.formDangKy.Password" label="Mật khẩu"
+                                <v-text-field type="password" prepend-icon="mdi-lock" v-model="this.formDangKy.Password" label="Mật khẩu"
                                     required></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                <v-text-field prepend-icon="mdi-lock" v-model="this.formDangKy.cfPassword"
+                                <v-text-field type="password" prepend-icon="mdi-lock" v-model="this.formDangKy.cfPassword"
                                     label="Nhập lại mật khẩu" required></v-text-field>
                             </v-col>
                         </v-row>

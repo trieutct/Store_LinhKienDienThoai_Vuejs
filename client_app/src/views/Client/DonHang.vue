@@ -17,6 +17,7 @@
                                 <th style="min-width: 150px;">Tổng Tiền</th>
                                 <th style="min-width: 150px;">Ngày Đặt</th>
                                 <th style="min-width: 150px;">Trạng Thái</th>
+                                <th style="min-width: 150px;">Xác Nhận</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -32,6 +33,10 @@
                                 <td v-if="item.TrangThai===1"><span class="text-green">Đang chuẩn bị hàng</span></td>
                                 <td v-if="item.TrangThai===2"><span class="text-blue">Đang giao</span></td>
                                 <td v-if="item.TrangThai===3"><span class="text-white pa-2" style="background-color: rgb(12, 242, 12);">Hoàn thành</span></td>
+                                <td v-if="item.TrangThai===2">
+                                    <v-btn @click="DaNhan(item.Id)" variant="tonal" color="green">Đã nhận</v-btn>
+                                </td>
+                                <td v-else></td>
                                 <td><v-btn @click="ShowDetails(item)" variant="text"><v-icon color="green">mdi-eye</v-icon></v-btn></td>
                             </tr>
                         </tbody>
@@ -82,6 +87,8 @@ export default {
                     //console.log(this.listDonHangByUserId)
                     //console.log(rs.data)
                 }).catch(erro=>{
+                    if(erro.response.statusText==='Unauthorized')
+                        this.$store.dispatch('logout')
                     this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',
@@ -115,6 +122,32 @@ export default {
         {
             this.orderId=item.Id
             this.ShowDialogDetails=true
+        },
+        DaNhan(id)
+        {
+            axios.get('http://localhost:5224/api/Order/DaNhanDonHang',{
+                params:{
+                    id:id
+                },
+                headers: {
+                    'Authorization': `Bearer ` + this.$store.state.token,
+                    },
+            }).then(()=>{
+                this.getlistDonHangByUserId(this.id)
+            }).catch(erro=>{
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
+                
+                    this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                })
         }
     },
     watch:{

@@ -38,7 +38,7 @@ export default {
         DonHangDangGiaoVue,
         DonHangHuyVue,
         DonHoanThanhVue,
-        ChiTietDonHangVue
+        ChiTietDonHangVue,
     },
     data() {
         return {

@@ -67,6 +67,8 @@ export default {
             }).then(rs => {
                 this.listorderDetail = rs.data
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',

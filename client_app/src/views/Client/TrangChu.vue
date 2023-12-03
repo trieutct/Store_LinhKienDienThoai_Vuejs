@@ -57,7 +57,6 @@ export default {
         }
     },
     methods: {
-
         getProducts() {
             axios.get("http://localhost:5224/api/Product/UserGetProduct").then(rs => {
                 this.products = rs.data
@@ -122,6 +121,8 @@ export default {
 
                 this.$store.dispatch('getFavoriteProductForUserId', this.$store.state.UserId)
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',
@@ -182,6 +183,8 @@ export default {
 
 
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',

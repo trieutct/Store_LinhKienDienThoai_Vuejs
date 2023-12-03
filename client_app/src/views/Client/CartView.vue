@@ -197,6 +197,8 @@ export default {
                     this.TinhTongTien()
                 }, 100);
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',
@@ -225,6 +227,8 @@ export default {
                     this.TinhTongTien()
                 }, 100);
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',
@@ -313,9 +317,14 @@ export default {
                 this.$store.dispatch('getListCart', this.$store.state.UserId)
                 setTimeout(() => {
                     this.TinhTongTien()
-                }, 500);
-                console.log(this.$store.state.listCart)
+                }, 100);
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+                //console.log(this.$store.state.listCart)
             }).catch(erro => {
+                if(erro.response.statusText==='Unauthorized')
+                    this.$store.dispatch('logout')
                 //console.log(erro.message)
                 this.$store.commit('setLoginError', {
                     show: true,
