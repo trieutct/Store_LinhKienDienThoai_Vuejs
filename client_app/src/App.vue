@@ -2,7 +2,6 @@
   <v-app>
     <nav-bar />
     <v-main>
-      <CarouselView/>
       <router-view />
     </v-main>
     <foo-ter />
@@ -14,11 +13,10 @@
 <script>
 import NavBar from './components/NavBar.vue';
 import FooTer from './components/FooTer.vue';
-import CarouselView from './components/CarouselView.vue';
 import ToastMessage from './components/ToastMessage.vue';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { NavBar, FooTer,CarouselView,ToastMessage },
+  components: { NavBar, FooTer,ToastMessage },
   data: () => ({
     length: 3,
     window: 0,
@@ -44,7 +42,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

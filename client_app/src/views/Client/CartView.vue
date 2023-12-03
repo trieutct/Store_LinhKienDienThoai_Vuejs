@@ -1,12 +1,12 @@
 <template>
-    <v-dialog transition="dialog-top-transition" width="1200px" :style="{ bottom: '80px' }">
+    <v-container>
         <v-card class="rounded-0" v-if="this.$store.state.listCart == null || this.$store.state.listCart.length === 0">
             <v-toolbar max-height="60px" class="text-center bold-text" style="background-color: #46694f;color: white;">
                 <v-icon left class="mx-6" size="40" color="white">mdi-check-underline-circle-outline</v-icon>
                 <h3>Giỏ hàng </h3>
-                <v-btn class="ml-auto" icon="mdi mdi-close" @click="this.$emit('close')"></v-btn>
+                <!-- <v-btn class="ml-auto" icon="mdi mdi-close" @click="this.$emit('close')"></v-btn> -->
             </v-toolbar>
-            <v-card-text >
+            <v-card-text>
                 <p class="text-center text-red ma-10">Chưa có sản phẩm nào</p>
             </v-card-text>
         </v-card>
@@ -14,7 +14,7 @@
             <v-toolbar max-height="60px" class="text-center bold-text" style="background-color: #46694f;color: white;">
                 <v-icon left class="mx-6" size="40" color="white">mdi-check-underline-circle-outline</v-icon>
                 <h3>Giỏ hàng </h3>
-                <v-btn class="ml-auto" icon="mdi mdi-close" @click="this.$emit('close')"></v-btn>
+                <!-- <v-btn class="ml-auto" icon="mdi mdi-close" @click="this.$emit('close')"></v-btn> -->
             </v-toolbar>
 
             <v-card-text v-if="this.$store.state.listCart == null || this.$store.state.listCart.length === 0">
@@ -24,7 +24,7 @@
                 <div class="ma-1">
                     <p>Giỏ hàng bạn đang hiện có <span class="text-red">{{ this.$store.state.listCart.length }}</span> sản
                         phẩm</p>
-                    <v-table height="300px" fixed-header class="bottom-border">
+                    <v-table fixed-header class="bottom-border">
                         <thead>
                             <tr>
                                 <th colspan="4" v-if="this.textErro != ''">
@@ -131,7 +131,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </v-dialog>
+    </v-container>
 </template>
 
 <script>
@@ -197,7 +197,7 @@ export default {
                     this.TinhTongTien()
                 }, 100);
             }).catch(erro => {
-                if(erro.response.statusText==='Unauthorized')
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
@@ -227,7 +227,7 @@ export default {
                     this.TinhTongTien()
                 }, 100);
             }).catch(erro => {
-                if(erro.response.statusText==='Unauthorized')
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
@@ -323,7 +323,7 @@ export default {
                 }, 3000);
                 //console.log(this.$store.state.listCart)
             }).catch(erro => {
-                if(erro.response.statusText==='Unauthorized')
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
                 //console.log(erro.message)
                 this.$store.commit('setLoginError', {
@@ -337,9 +337,8 @@ export default {
                 }, 3000);
             })
         },
-        setEmpty()
-        {
-            this.chooseListProduct=[]
+        setEmpty() {
+            this.chooseListProduct = []
         }
     },
 
@@ -352,8 +351,7 @@ export default {
             //console.log(newvl)
         },
         selectAll(newVal) {
-            if (!newVal)
-            {
+            if (!newVal) {
                 this.setEmpty()
                 this.TinhTongTien()
                 return

@@ -1,12 +1,12 @@
 <template>
-  <v-dialog :style="{ bottom: '80px' }">
-    <v-card class="rounded-0">
+    <v-dialog :style="{ bottom: '80px' }">
+        <v-card class="rounded-0">
             <v-toolbar max-height="60px" class="text-center bold-text" style="background-color: #46694f;color: white;">
                 <v-icon left class="mx-6" size="40" color="white">mdi-cart</v-icon>
                 <h3>Đơn hàng của bạn</h3>
                 <v-btn @click="this.$emit('close')" class="ml-auto" icon="mdi mdi-close"></v-btn>
             </v-toolbar>
-            <v-card-text >
+            <v-card-text>
                 <div class="ma-1">
                     <v-table fixed-header class="bottom-border">
                         <thead>
@@ -23,77 +23,76 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in this.listDonHangByUserId" :key="item.Id">
-                                <td>{{  item.Id}}</td>
+                                <td>{{ item.Id }}</td>
                                 <td>{{ item.NguoiNhan }}</td>
                                 <td>{{ item.DiaChi }}</td>
                                 <td>{{ formatCurrency(item.Total) }}</td>
                                 <td>{{ formatDateTime(item.NgayDat) }}</td>
-                                <td v-if="item.TrangThai===0"><span class="text-green">Chờ duyệt</span></td>
-                                <td v-if="item.TrangThai===-1"><span class="text-white pa-2" style="background-color: rgb(242, 12, 12);min-width: 30px;">Đã hủy</span></td>
-                                <td v-if="item.TrangThai===1"><span class="text-green">Đang chuẩn bị hàng</span></td>
-                                <td v-if="item.TrangThai===2"><span class="text-blue">Đang giao</span></td>
-                                <td v-if="item.TrangThai===3"><span class="text-white pa-2" style="background-color: rgb(12, 242, 12);">Hoàn thành</span></td>
-                                <td v-if="item.TrangThai===2">
+                                <td v-if="item.TrangThai === 0"><span class="text-green">Chờ duyệt</span></td>
+                                <td v-if="item.TrangThai === -1"><span class="text-white pa-2"
+                                        style="background-color: rgb(242, 12, 12);min-width: 30px;">Đã hủy</span></td>
+                                <td v-if="item.TrangThai === 1"><span class="text-green">Đang chuẩn bị hàng</span></td>
+                                <td v-if="item.TrangThai === 2"><span class="text-blue">Đang giao</span></td>
+                                <td v-if="item.TrangThai === 3"><span class="text-white pa-2"
+                                        style="background-color: rgb(12, 242, 12);">Hoàn thành</span></td>
+                                <td v-if="item.TrangThai === 2">
                                     <v-btn @click="DaNhan(item.Id)" variant="tonal" color="green">Đã nhận</v-btn>
                                 </td>
                                 <td v-else></td>
-                                <td><v-btn @click="ShowDetails(item)" variant="text"><v-icon color="green">mdi-eye</v-icon></v-btn></td>
+                                <td><v-btn @click="ShowDetails(item)" variant="text"><v-icon
+                                            color="green">mdi-eye</v-icon></v-btn></td>
                             </tr>
                         </tbody>
                     </v-table>
                 </div>
             </v-card-text>
         </v-card>
-        <ChiTietDonHangVue :orderId="this.orderId" v-model="this.ShowDialogDetails"/>
-  </v-dialog>
+        <ChiTietDonHangVue :orderId="this.orderId" v-model="this.ShowDialogDetails" />
+    </v-dialog>
 </template>
 <script>
 import axios from 'axios';
 import ChiTietDonHangVue from './ChiTietDonHang.vue';
 export default {
-    name:'DonHang',
-    components:{
+    name: 'DonHang',
+    components: {
         ChiTietDonHangVue
     },
-    props:{
-        id:String
+    props: {
+        id: String
     },
-    data()
-    {
-        return{
-            listDonHangByUserId:[],
-            ShowDialogDetails:false,
-            orderId:''
+    data() {
+        return {
+            listDonHangByUserId: [],
+            ShowDialogDetails: false,
+            orderId: ''
         }
     },
-    mounted()
-    {
+    mounted() {
         this.getlistDonHangByUserId(this.id)
     },
-    methods:{
-        getlistDonHangByUserId(UserId)
-        {
-            if(sessionStorage.getItem('UserId'))
-            {
-                axios.get('http://localhost:5224/api/Order',{
+    methods: {
+        getlistDonHangByUserId(UserId) {
+            if (sessionStorage.getItem('UserId')) {
+                axios.get('http://localhost:5224/api/Order', {
                     params: {
                         id: UserId,
                     },
                     headers: {
-                    'Authorization': `Bearer ` + this.$store.state.token,
+                        'Authorization': `Bearer ` + this.$store.state.token,
                     },
-                }).then(rs=>{
-                    this.listDonHangByUserId=rs.data
+                }).then(rs => {
+                    this.listDonHangByUserId = rs.data
                     //console.log(this.listDonHangByUserId)
                     //console.log(rs.data)
-                }).catch(erro=>{
-                    if(erro.response.statusText==='Unauthorized')
+                }).catch(erro => {
+                    if (erro.response.statusText === 'Unauthorized')
                         this.$store.dispatch('logout')
                     this.$store.commit('setLoginError', {
-                    show: true,
-                    icon: '$error',
-                    content: erro.message,
-                    color: 'error'
+                        show: true,
+                        icon: '$error',
+                        content: erro.message,
+                        color: 'error'
                     });
                     setTimeout(() => {
                         this.$store.commit('clearLoginError');
@@ -118,47 +117,42 @@ export default {
             });
             return formatter.format(value);
         },
-        ShowDetails(item)
-        {
-            this.orderId=item.Id
-            this.ShowDialogDetails=true
+        ShowDetails(item) {
+            this.orderId = item.Id
+            this.ShowDialogDetails = true
         },
-        DaNhan(id)
-        {
-            axios.get('http://localhost:5224/api/Order/DaNhanDonHang',{
-                params:{
-                    id:id
+        DaNhan(id) {
+            axios.get('http://localhost:5224/api/Order/DaNhanDonHang', {
+                params: {
+                    id: id
                 },
                 headers: {
                     'Authorization': `Bearer ` + this.$store.state.token,
-                    },
-            }).then(()=>{
+                },
+            }).then(() => {
                 this.getlistDonHangByUserId(this.id)
-            }).catch(erro=>{
-                if(erro.response.statusText==='Unauthorized')
+            }).catch(erro => {
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
-                
-                    this.$store.commit('setLoginError', {
+
+                this.$store.commit('setLoginError', {
                     show: true,
                     icon: '$error',
                     content: erro.message,
                     color: 'error'
-                    });
-                    setTimeout(() => {
-                        this.$store.commit('clearLoginError');
-                    }, 3000);
-                })
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
         }
     },
-    watch:{
-        id(newVal)
-        {
+    watch: {
+        id(newVal) {
             this.getlistDonHangByUserId(newVal)
         }
     }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

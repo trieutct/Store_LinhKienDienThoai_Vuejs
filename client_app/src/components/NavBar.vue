@@ -1,7 +1,7 @@
 <template>
     <v-app-bar style="background-color: #000 !important;" class="text-white">
         <v-toolbar-items>
-            <v-btn>Trang Chủ</v-btn>
+            <v-btn :to="{ name: 'TrangChu' }">Trang Chủ</v-btn>
             <v-btn>Giới Thiệu</v-btn>
             <!-- <v-btn>
                 <v-icon>mdi-cat</v-icon>
@@ -16,10 +16,12 @@
         <v-btn v-if="this.$store.state.token != null">
             <v-menu open-on-hover width="500px" min-height="100px" max-height="500px">
                 <template v-slot:activator="{ props }">
-                    <v-badge @click="showCart()" v-if="this.$store.state.listCart===null" v-bind="props" floating content="0" color="red">
+                    <v-badge @click="showCart()" v-if="this.$store.state.listCart === null" v-bind="props" floating
+                        content="0" color="red">
                         <v-icon>mdi-cart</v-icon>
                     </v-badge>
-                    <v-badge @click="showCart()" v-else v-bind="props" floating :content="this.$store.state.listCart.length" color="red">
+                    <v-badge @click="showCart()" v-else v-bind="props" floating :content="this.$store.state.listCart.length"
+                        color="red">
                         <v-icon>mdi-cart</v-icon>
                     </v-badge>
                 </template>
@@ -29,7 +31,7 @@
                             <v-icon icon="mdi-account-circle"></v-icon>
                         </template>
                         <v-list-item-title style="cursor: pointer;">Thông tin tài khoản</v-list-item-title> -->
-                        <v-card v-if="this.$store.state.listCart==null  || this.$store.state.listCart.length===0">
+                        <v-card v-if="this.$store.state.listCart == null || this.$store.state.listCart.length === 0">
                             <v-row>
                                 <v-col cols="12" class="text-center">
                                     <span color="red" style="color: red;">Chưa có sản phẩm trong giỏ hàng</span>
@@ -42,7 +44,7 @@
                                     <span style="color: #a79e9ecc;">Sản phẩm mới thêm</span>
                                 </v-col>
                             </v-row>
-                            <v-row  v-for="cart in this.$store.state.listCart" :key="cart">
+                            <v-row v-for="cart in this.$store.state.listCart" :key="cart">
                                 <v-col cols="2">
                                     <v-img width="50" height="50" :src="cart.Image"></v-img>
                                 </v-col>
@@ -80,7 +82,8 @@
                         <template v-slot:prepend>
                             <v-icon icon="mdi-cart"></v-icon>
                         </template>
-                        <v-list-item-title @click="this.showDonHang=true" style="cursor: pointer;">Đơn hàng của bạn</v-list-item-title>
+                        <v-list-item-title @click="this.showDonHang = true" style="cursor: pointer;">Đơn hàng của
+                            bạn</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                         <template v-slot:prepend>
@@ -101,45 +104,48 @@
     </v-app-bar>
     <LoginView @showFormQuenMatKhau="showFormQuenMatKhau" @close="closeFormLogin" v-model="this.showformLogin" />
 
-    <form-quen-mat-khau  @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau"/>
-    <CartView v-model="this.cartVisible" @close="this.cartVisible=false"/>
+    <form-quen-mat-khau @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau" />
+    <!-- <CartView v-model="this.cartVisible" @close="this.cartVisible=false"/> -->
 
-    <DonHang :id="this.$store.state.UserId" v-model="showDonHang" @close="this.showDonHang=false"/>
+    <DonHang :id="this.$store.state.UserId" v-model="showDonHang" @close="this.showDonHang = false" />
 </template>
 <script>
 import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
-import CartView from '@/views/Client/CartView.vue'
+// import CartView from '@/views/Client/CartView.vue'
 import DonHang from '@/views/Client/DonHang.vue'
 export default {
-    components: { LoginView,FormQuenMatKhau,CartView ,DonHang},
+    components: {
+        LoginView, FormQuenMatKhau,
+        // CartView,
+        DonHang
+    },
     name: 'NavBar',
     data() {
         return {
             drawer: null,
             showformLogin: false,
-            showDonHang:false,
+            showDonHang: false,
             items: [
                 { title: 'Trịnh Công Triệu' },
                 { title: 'Click Me' },
                 { title: 'Click Me' },
                 { title: 'Click Me 2' },
             ],
-            isShowFormQuenMatKhau:false,
-            cartVisible:false
+            isShowFormQuenMatKhau: false,
+            cartVisible: false
         }
     },
     methods: {
         closeFormLogin() {
             this.showformLogin = false
         },
-        closeFormQuenMatKhau(){
-            this.isShowFormQuenMatKhau=false
+        closeFormQuenMatKhau() {
+            this.isShowFormQuenMatKhau = false
         },
-        showFormQuenMatKhau()
-        {
-            this.isShowFormQuenMatKhau=true,
-            this.closeFormLogin()
+        showFormQuenMatKhau() {
+            this.isShowFormQuenMatKhau = true,
+                this.closeFormLogin()
         },
         formatCurrency(value) {
             const formatter = new Intl.NumberFormat('vi-VN', {
@@ -149,9 +155,9 @@ export default {
 
             return formatter.format(value);
         },
-        showCart()
-        {
-           this.cartVisible=true
+        showCart() {
+            this.cartVisible = true
+            this.$router.push({ name: 'CartView' })
         }
     }
 }

@@ -1,4 +1,5 @@
 <template>
+    <CarouselView />
     <h2 class="block-title position-relative text-center bold mb-4 mt-3">
 
         <span class="position-absolute">-Sport-</span>
@@ -9,8 +10,8 @@
             <v-hover v-slot="{ isHovering, props }">
                 <v-card class="mx-auto" max-width="344" min-height="300px">
                     <v-img v-bind="props" class="text-right" :src="product.ProductImage" height="200px" cover>
-                        <v-btn v-if="this.$store.state.FavoriteProductForUserId != null" @click="AddFavoriteProduct(product)"
-                            icon>
+                        <v-btn v-if="this.$store.state.FavoriteProductForUserId != null"
+                            @click="AddFavoriteProduct(product)" icon>
                             <v-icon color="red">{{
                                 this.$store.state.FavoriteProductForUserId.some(x => x.ProductId === product.ProductId) ?
                                 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
@@ -47,8 +48,13 @@
 </template>
   
 <script>
+import CarouselView from '@/components/CarouselView.vue';
+
 import axios from 'axios';
 export default {
+    components: {
+        CarouselView
+    },
     data() {
         return {
             show: false,
@@ -89,7 +95,7 @@ export default {
             const formData = new FormData();
             formData.append('ProductId', item.ProductId);
             formData.append('UserId', this.$store.state.UserId);
-            axios.post('http://localhost:5224/api/FavoriteProduct', formData,{
+            axios.post('http://localhost:5224/api/FavoriteProduct', formData, {
                 headers: {
                     'Authorization': `Bearer ` + this.$store.state.token,
                 },
@@ -121,7 +127,7 @@ export default {
 
                 this.$store.dispatch('getFavoriteProductForUserId', this.$store.state.UserId)
             }).catch(erro => {
-                if(erro.response.statusText==='Unauthorized')
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
@@ -183,7 +189,7 @@ export default {
 
 
             }).catch(erro => {
-                if(erro.response.statusText==='Unauthorized')
+                if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')
                 this.$store.commit('setLoginError', {
                     show: true,
