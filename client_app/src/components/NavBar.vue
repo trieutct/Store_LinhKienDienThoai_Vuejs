@@ -1,5 +1,9 @@
 <template>
     <v-app-bar style="background-color: #000 !important;" class="text-white">
+    <v-toolbar-title class="ml-4">
+        <span class="text-purple">--LeO Store--</span>
+        <!-- <strong> </strong> -->
+    </v-toolbar-title>
         <v-toolbar-items>
             <v-btn :to="{ name: 'TrangChu' }">Trang Chủ</v-btn>
             <v-btn>Giới Thiệu</v-btn>
@@ -82,7 +86,7 @@
                         <template v-slot:prepend>
                             <v-icon icon="mdi-cart"></v-icon>
                         </template>
-                        <v-list-item-title @click="this.showDonHang = true" style="cursor: pointer;">Đơn hàng của
+                        <v-list-item-title @click="ShowDonHang()" style="cursor: pointer;">Đơn hàng của
                             bạn</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
@@ -105,27 +109,23 @@
     <LoginView @showFormQuenMatKhau="showFormQuenMatKhau" @close="closeFormLogin" v-model="this.showformLogin" />
 
     <form-quen-mat-khau @close="closeFormQuenMatKhau" v-model="isShowFormQuenMatKhau" />
-    <!-- <CartView v-model="this.cartVisible" @close="this.cartVisible=false"/> -->
 
-    <DonHang :id="this.$store.state.UserId" v-model="showDonHang" @close="this.showDonHang = false" />
+    <!-- <DonHang :id="this.$store.state.UserId" v-model="showDonHang" @close="this.showDonHang = false" /> -->
 </template>
 <script>
 import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
-// import CartView from '@/views/Client/CartView.vue'
-import DonHang from '@/views/Client/DonHang.vue'
+// import DonHang from '@/views/Client/DonHang.vue'
 export default {
     components: {
         LoginView, FormQuenMatKhau,
-        // CartView,
-        DonHang
+        // DonHang
     },
     name: 'NavBar',
     data() {
         return {
             drawer: null,
             showformLogin: false,
-            showDonHang: false,
             items: [
                 { title: 'Trịnh Công Triệu' },
                 { title: 'Click Me' },
@@ -133,7 +133,6 @@ export default {
                 { title: 'Click Me 2' },
             ],
             isShowFormQuenMatKhau: false,
-            cartVisible: false
         }
     },
     methods: {
@@ -158,6 +157,10 @@ export default {
         showCart() {
             this.cartVisible = true
             this.$router.push({ name: 'CartView' })
+        },
+        ShowDonHang()
+        {
+            this.$router.push({ name: 'DonHang' })
         }
     }
 }

@@ -1,10 +1,10 @@
 <template>
-    <v-dialog :style="{ bottom: '80px' }">
+    <v-container>
         <v-card class="rounded-0">
             <v-toolbar max-height="60px" class="text-center bold-text" style="background-color: #46694f;color: white;">
                 <v-icon left class="mx-6" size="40" color="white">mdi-cart</v-icon>
                 <h3>Đơn hàng của bạn</h3>
-                <v-btn @click="this.$emit('close')" class="ml-auto" icon="mdi mdi-close"></v-btn>
+                <!-- <v-btn @click="this.$emit('close')" class="ml-auto" icon="mdi mdi-close"></v-btn> -->
             </v-toolbar>
             <v-card-text>
                 <div class="ma-1">
@@ -48,7 +48,7 @@
             </v-card-text>
         </v-card>
         <ChiTietDonHangVue :orderId="this.orderId" v-model="this.ShowDialogDetails" />
-    </v-dialog>
+    </v-container>
 </template>
 <script>
 import axios from 'axios';
@@ -69,7 +69,7 @@ export default {
         }
     },
     mounted() {
-        this.getlistDonHangByUserId(this.id)
+        this.getlistDonHangByUserId(this.$store.state.UserId)
     },
     methods: {
         getlistDonHangByUserId(UserId) {

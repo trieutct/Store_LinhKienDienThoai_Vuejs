@@ -1,6 +1,6 @@
 <template>
     <v-dialog :style="{ bottom: '80px' }">
-        <v-table min-height="100px" fixed-header class="bottom-border">
+        <v-table height="400px" fixed-header class="bottom-border">
             <thead>
                 <tr>
                     <th colspan="1.5">Thông tin sản phẩm</th>
