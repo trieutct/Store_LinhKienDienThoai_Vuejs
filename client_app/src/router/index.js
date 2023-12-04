@@ -31,7 +31,17 @@ const routes = [
     path: '/ListProductSearch/:id',
     name: 'ListProductSearch',
     component: () => import('../views/Client/ListProductSearch.vue')
-  }
+  },
+  {
+    path: '/ProfileView',
+    name: 'ProfileView',
+    component: () => import('../views/Client/ProfileView.vue')
+  },
+  {
+    path: '/DoiMatKhau',
+    name: 'DoiMatKhau',
+    component: () => import('../views/Client/DoiMatKhau.vue')
+  },
 ]
 
 const router = createRouter({

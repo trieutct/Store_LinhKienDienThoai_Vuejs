@@ -34,7 +34,7 @@
                                 <td v-if="item.TrangThai === 1"><span class="text-green">Đang chuẩn bị hàng</span></td>
                                 <td v-if="item.TrangThai === 2"><span class="text-blue">Đang giao</span></td>
                                 <td v-if="item.TrangThai === 3"><span class="text-white pa-2"
-                                        style="background-color: rgb(12, 242, 12);">Hoàn thành</span></td>
+                                        style="background-color: rgb(12, 242, 12);">Giao hàng thành công</span></td>
                                 <td v-if="item.TrangThai === 2">
                                     <v-btn @click="DaNhan(item.Id)" variant="tonal" color="green">Đã nhận</v-btn>
                                 </td>

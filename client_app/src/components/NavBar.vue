@@ -92,7 +92,7 @@
                         <template v-slot:prepend>
                             <v-icon icon="mdi-account-circle"></v-icon>
                         </template>
-                        <v-list-item-title style="cursor: pointer;">Thông tin tài khoản</v-list-item-title>
+                        <v-list-item-title @click="ShowProfile()" style="cursor: pointer;">Hồ sơ</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                         <template v-slot:prepend>
@@ -105,7 +105,7 @@
                         <template v-slot:prepend>
                             <v-icon icon="mdi-lock"></v-icon>
                         </template>
-                        <v-list-item-title style="cursor: pointer;">Đổi mật khẩu</v-list-item-title>
+                        <v-list-item-title @click="ShowDoiMatKhau()" style="cursor: pointer;">Đổi mật khẩu</v-list-item-title>
                     </v-list-item>
                     <v-list-item>
                         <template v-slot:prepend>
@@ -175,6 +175,14 @@ export default {
         ShowDonHang()
         {
             this.$router.push({ name: 'DonHang' })
+        },
+        ShowProfile()
+        {
+            this.$router.push({ name: 'ProfileView' })
+        },
+        ShowDoiMatKhau()
+        {
+            this.$router.push({ name: 'DoiMatKhau' })
         },
         getAllCategory()
         {
