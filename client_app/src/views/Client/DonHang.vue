@@ -130,7 +130,7 @@ export default {
                     'Authorization': `Bearer ` + this.$store.state.token,
                 },
             }).then(() => {
-                this.getlistDonHangByUserId(this.id)
+                this.getlistDonHangByUserId(this.$store.state.UserId)
             }).catch(erro => {
                 if (erro.response.statusText === 'Unauthorized')
                     this.$store.dispatch('logout')

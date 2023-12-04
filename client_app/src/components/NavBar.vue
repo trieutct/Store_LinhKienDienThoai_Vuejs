@@ -10,7 +10,19 @@
             <!-- <v-btn>
                 <v-icon>mdi-cat</v-icon>
             </v-btn> -->
-            <v-btn>Sản Phẩm</v-btn>
+            <v-menu open-on-hover >
+                <template v-slot:activator="{ props }">
+                    <v-btn v-bind="props">
+                        Sản Phẩm 
+                        <v-icon>mdi-chevron-down</v-icon>
+                    </v-btn>
+                </template>
+                <v-list class="rounded-0">
+                    <v-list-item :to="{ name: 'ListProductSearch',params:{id:item.CategoryId} }"  v-for="item in this.Categories" :key="item.CategoryId">
+                        <p class="hover" style="font-size: 14px;cursor: pointer;">{{ item.CategoryName }}</p>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
             <v-btn>Liên Hệ</v-btn>
             <v-btn>Tin Tức</v-btn>
         </v-toolbar-items>
@@ -115,6 +127,7 @@
 <script>
 import FormQuenMatKhau from '@/views/Account/FormQuenMatKhau.vue'
 import LoginView from '@/views/Account/LoginView.vue'
+import axios from 'axios'
 // import DonHang from '@/views/Client/DonHang.vue'
 export default {
     components: {
@@ -133,6 +146,7 @@ export default {
                 { title: 'Click Me 2' },
             ],
             isShowFormQuenMatKhau: false,
+            Categories:[]
         }
     },
     methods: {
@@ -161,9 +175,33 @@ export default {
         ShowDonHang()
         {
             this.$router.push({ name: 'DonHang' })
+        },
+        getAllCategory()
+        {
+            axios.get('http://localhost:5224/api/Category').then(rs=>{
+                this.Categories=rs.data
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
         }
+    },
+    created()
+    {
+        this.getAllCategory()
     }
 }
 </script>
 
-<style></style>
+<style>
+.hover:hover{
+    color: red;
+}
+</style>

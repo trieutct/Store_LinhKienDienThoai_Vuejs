@@ -26,6 +26,11 @@ const routes = [
     path: '/DonHang',
     name: 'DonHang',
     component: () => import('../views/Client/DonHang.vue')
+  },
+  {
+    path: '/ListProductSearch/:id',
+    name: 'ListProductSearch',
+    component: () => import('../views/Client/ListProductSearch.vue')
   }
 ]
 

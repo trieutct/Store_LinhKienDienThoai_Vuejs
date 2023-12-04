@@ -1,49 +1,71 @@
 <template>
     <CarouselView />
-    <h2 class="block-title position-relative text-center bold mb-4 mt-3">
-        <span class="position-absolute">-Sport-</span>
-        <span> SẢN PHẨM NỔI BẬT</span>
-    </h2>
-    <v-row class="ma-1">
-        <v-col v-for="product in products" :key="product.id" cols="12" md="3">
-            <v-hover v-slot="{ isHovering, props }">
-                <v-card class="mx-auto" max-width="344" min-height="300px">
-                    <v-img v-bind="props" class="text-right" :src="product.ProductImage" height="200px" cover>
-                        <v-btn v-if="this.$store.state.FavoriteProductForUserId != null"
-                            @click="AddFavoriteProduct(product)" icon>
-                            <v-icon color="red">{{
-                                this.$store.state.FavoriteProductForUserId.some(x => x.ProductId === product.ProductId) ?
-                                'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-                            <!-- <p>{{ product.ProductId }}</p> -->
-                        </v-btn>
-                        <v-btn v-else @click="AddFavoriteProduct(product)" icon>
-                            <v-icon color="red">mdi-heart-outline</v-icon>
-                        </v-btn>
-                        <v-expand-transition>
-                            <v-row v-if="isHovering" class="overlay">
-                                <v-col cols="6">
-                                    <v-btn @click="AddCart(product)" class="rounded-0" color="primary">Thêm giỏ hàng</v-btn>
-                                </v-col>
-                                <v-col cols="6">
-                                    <v-btn class="rounded-0" color="secondary">Xem chi tiết</v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-expand-transition>
-                    </v-img>
+    <div style="background-color: #eee;">
+        <v-row>
+        <v-col cols="2">
+            <v-card class="rounded-0 mt-3 ml-2">
+                <v-card-title><strong>Danh Mục</strong></v-card-title>
+                <v-list lines="one">
+                    <v-list-item class="hover"
+                        @click="searchByCategory(item.CategoryId)"
+                        v-for="item in this.Categories"
+                        :key="item.CategoryId"
+                        :title="item.CategoryName"
+                    ></v-list-item>
+                    </v-list>
+            </v-card>
+        </v-col>
+        <v-col cols="10">
+            <div style="background-color: white;">
+                <h2 class="block-title position-relative text-center bold mb-4 mt-3">
+                <span class="position-absolute">-Sport-</span>
+                <span> {{ this.CategoryName }}</span>
+            </h2>
+            <v-row class="ma-1">
+                <v-col v-for="product in products" :key="product.id" cols="12" md="3">
+                    <v-hover v-slot="{ isHovering, props }">
+                        <v-card class="mx-auto" max-width="344" min-height="300px">
+                            <v-img v-bind="props" class="text-right" :src="product.ProductImage" height="200px" cover>
+                                <v-btn v-if="this.$store.state.FavoriteProductForUserId != null"
+                                    @click="AddFavoriteProduct(product)" icon>
+                                    <v-icon color="red">{{
+                                        this.$store.state.FavoriteProductForUserId.some(x => x.ProductId ===
+                                            product.ProductId) ?
+                                        'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+                                    <!-- <p>{{ product.ProductId }}</p> -->
+                                </v-btn>
+                                <v-btn v-else @click="AddFavoriteProduct(product)" icon>
+                                    <v-icon color="red">mdi-heart-outline</v-icon>
+                                </v-btn>
+                                <v-expand-transition>
+                                    <v-row v-if="isHovering" class="overlay">
+                                        <v-col cols="6">
+                                            <v-btn @click="AddCart(product)" class="rounded-0" color="primary">Thêm giỏ
+                                                hàng</v-btn>
+                                        </v-col>
+                                        <v-col cols="6">
+                                            <v-btn class="rounded-0" color="secondary">Xem chi tiết</v-btn>
+                                        </v-col>
+                                    </v-row>
+                                </v-expand-transition>
+                            </v-img>
 
-                    <v-card-title>
-                        {{ product.ProductName }}
-                    </v-card-title>
+                            <v-card-title>
+                                {{ product.ProductName }}
+                            </v-card-title>
 
-                    <v-card-subtitle class="mb-5">
-                        {{ formatCurrency(product.Price) }}
-                    </v-card-subtitle>
-
-                </v-card>
-            </v-hover>
+                            <v-card-subtitle class="mb-5">
+                                {{ formatCurrency(product.Price) }}
+                            </v-card-subtitle>
+                        </v-card>
+                    </v-hover>
+                </v-col>
+            </v-row>
+            </div>
         </v-col>
     </v-row>
-    <v-btn class="ma-5" style="background-color: #46694f;color: white;" width="200">Xem tất cả</v-btn>
+    </div>
+    <!-- <v-btn class="ma-5" style="background-color: #46694f;color: white;" width="200">Xem tất cả</v-btn> -->
 </template>
   
 <script>
@@ -59,14 +81,37 @@ export default {
             show: false,
             selection: [],
             products: [],
+            Categories:[],
+            idCategpry:null,
+            CategoryName:''
         }
     },
     methods: {
-        getProducts() {
-            axios.get("http://localhost:5224/api/Product/UserGetProduct").then(rs => {
+        getProducts(categoryid) {
+            axios.get("http://localhost:5224/api/Product/getProductByCategoryId", {
+                params: {
+                    id: categoryid
+                }
+            }).then(rs => {
                 this.products = rs.data
             }).catch(er => {
                 alert(er.message)
+            })
+        },
+        getCategoryNameByCategoryId(categoryid)
+        {
+            axios.get('http://localhost:5224/api/Category/'+categoryid).then(rs=>{
+                this.CategoryName=rs.data.CategoryName
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
             })
         },
         formatCurrency(value) {
@@ -200,11 +245,39 @@ export default {
                     this.$store.commit('clearLoginError');
                 }, 3000);
             })
+        },
+        getAllCategory()
+        {
+            axios.get('http://localhost:5224/api/Category').then(rs=>{
+                this.Categories=rs.data
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
+        },
+        searchByCategory(categoryid)
+        {
+            this.getCategoryNameByCategoryId(categoryid)
+            this.getProducts(categoryid)
         }
     },
     created() {
-        this.getProducts()
-    }
+        this.getAllCategory()
+        this.getProducts(this.$route.params.id)
+        this.getCategoryNameByCategoryId(this.$route.params.id)
+    },
+    updated() {
+        this.getProducts(this.$route.params.id)
+        this.getCategoryNameByCategoryId(this.$route.params.id)
+        //alert(this.$route.params.id)
+    },
 }
 </script>
 <style scoped>
@@ -245,5 +318,11 @@ export default {
 .block-title span:nth-child(2) {
     color: #46694f;
     font-size: 60px;
+}
+.hover{
+    cursor: pointer;
+}
+.hover :hover{
+    color: red;
 }
 </style>
