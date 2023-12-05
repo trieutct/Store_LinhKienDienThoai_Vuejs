@@ -1,46 +1,66 @@
 <template>
-    <div id="chartdiv"></div>
+    <canvas id="myChart2" style="background-color:white;"></canvas>
 </template>
 
 <script>
+import Chart from 'chart.js/auto';
+import axios from 'axios';
 export default {
-    mounted() {
-        am5.ready(function () {
-            var root = am5.Root.new("chartdiv");
-            root.setThemes([
-                am5themes_Animated.new(root)
-            ]);
-            var chart = root.container.children.push(am5percent.PieChart.new(root, {
-                layout: root.verticalLayout,
-                innerRadius: am5.percent(50)
-            }));
-            var series = chart.series.push(am5percent.PieSeries.new(root, {
-                valueField: "value",
-                categoryField: "category",
-                alignLabels: false
-            }));
-            series.labels.template.setAll({
-                textType: "circular",
-                centerX: 0,
-                centerY: 0,
-                text: "{category}: {value} đơn"
+    data() {
+        return {
+            data: []
+        }
+    },
+    methods: {
+        getSoluongTheoTrangThaiDonHang() {
+            axios.get('http://localhost:5224/api/DashBoard/getSoLuongDonHangTheoTrangThai').then(rs => {
+                this.data = rs.data
+                this.setAmChartjs(this.data)
+            }).catch(erro => {
+                this.$store.commit('setLoginError', {
+                    show: true,
+                    icon: '$error',
+                    content: erro.message,
+                    color: 'error'
+                });
+                setTimeout(() => {
+                    this.$store.commit('clearLoginError');
+                }, 3000);
+            })
+        },
+        setAmChartjs(dulieu) {
+            var xValues = dulieu.map(item => item.TenTrangThai);;
+            var yValues = dulieu.map(item => item.Value);;
+            var barColors = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+
+            new Chart("myChart2", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
             });
-            series.data.setAll([
-                { value: 5, category: "Four" },
-                { value: 4, category: "Five" },
-                { value: 3, category: "Six" },
-                { value: 1, category: "Seven" },
-            ]);
-            var legend = chart.children.push(am5.Legend.new(root, {
-                centerX: am5.percent(50),
-                x: am5.percent(50),
-                marginTop: 15,
-                marginBottom: 15,
-            }));
-            legend.data.setAll(series.dataItems);
-            series.appear(1000, 100);
-        });
-    }
+        }
+    },
+    created() {
+        this.getSoluongTheoTrangThaiDonHang()
+    },
 }
 </script>
 
