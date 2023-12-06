@@ -29,17 +29,15 @@ export default {
             })
         },
         setAmChartjs(dulieu) {
-            var xValues = dulieu.map(item => item.TenTrangThai);;
-            var yValues = dulieu.map(item => item.Value);;
+            var xValues = dulieu.map(item => item.TenTrangThai);
+            var yValues = dulieu.map(item => item.Value);
             var barColors = [
-                "#b91d47",
-                "#00aba9",
-                "#2b5797",
-                "#e8c3b9",
-                "#1e7145"
+                "#87CEFA",
+                "#87CEEB",
+                "#6495ED",
+                "#00BFFF",
+                "#1E90FF"
             ];
-
-
             new Chart("myChart2", {
                 type: "pie",
                 data: {

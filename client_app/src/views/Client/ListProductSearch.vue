@@ -88,18 +88,51 @@ export default {
     },
     methods: {
         getProducts(categoryid) {
-            axios.get("http://localhost:5224/api/Product/getProductByCategoryId", {
+            if(categoryid==-1)
+            {
+                axios.get("http://localhost:5224/api/Product/getAll").then(rs => {
+                    this.products = rs.data
+                }).catch(erro => {
+                    console.log(erro)
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$error',
+                        content: erro.message,
+                        color: 'error'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                })
+            }
+            else
+            {
+                axios.get("http://localhost:5224/api/Product/getProductByCategoryId", {
                 params: {
                     id: categoryid
                 }
-            }).then(rs => {
-                this.products = rs.data
-            }).catch(er => {
-                alert(er.message)
-            })
+                }).then(rs => {
+                    this.products = rs.data
+                }).catch(erro => {
+                    this.$store.commit('setLoginError', {
+                        show: true,
+                        icon: '$error',
+                        content: erro.message,
+                        color: 'error'
+                    });
+                    setTimeout(() => {
+                        this.$store.commit('clearLoginError');
+                    }, 3000);
+                })
+            }
         },
         getCategoryNameByCategoryId(categoryid)
         {
+            if(categoryid==-1)
+            {
+                this.CategoryName="Danh sách sản phẩm"
+                return
+            }
             axios.get('http://localhost:5224/api/Category/'+categoryid).then(rs=>{
                 this.CategoryName=rs.data.CategoryName
             }).catch(erro => {
@@ -276,7 +309,6 @@ export default {
     updated() {
         this.getProducts(this.$route.params.id)
         this.getCategoryNameByCategoryId(this.$route.params.id)
-        //alert(this.$route.params.id)
     },
 }
 </script>

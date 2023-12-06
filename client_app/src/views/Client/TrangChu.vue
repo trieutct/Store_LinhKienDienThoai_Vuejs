@@ -43,7 +43,9 @@
             </v-hover>
         </v-col>
     </v-row>
-    <v-btn class="ma-5" style="background-color: #46694f;color: white;" width="200">Xem tất cả</v-btn>
+    <div style="width: 100%;" class="text-center">
+        <v-btn :to="{ name: 'ListProductSearch',params:{id:-1} }" class="ma-5" style="background-color: #46694f;color: white;" width="200">Xem tất cả</v-btn>
+    </div>
 </template>
   
 <script>
